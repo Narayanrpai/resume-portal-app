@@ -29,7 +29,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/edit").authenticated()
-                .requestMatchers("/*").permitAll()
+                .requestMatchers("/**").permitAll()
         )
                 .formLogin(Customizer.withDefaults());
         return http.build();
