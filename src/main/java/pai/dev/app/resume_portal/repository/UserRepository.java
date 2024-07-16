@@ -1,6 +1,6 @@
-package repository;
+package pai.dev.app.resume_portal.repository;
 
-import models.User;
+import pai.dev.app.resume_portal.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

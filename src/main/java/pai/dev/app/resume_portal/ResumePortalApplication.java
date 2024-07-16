@@ -3,7 +3,7 @@ package pai.dev.app.resume_portal;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import repository.UserRepository;
+import pai.dev.app.resume_portal.repository.UserRepository;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
