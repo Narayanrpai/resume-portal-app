@@ -2,6 +2,9 @@ package pai.dev.app.resume_portal.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table
 public class UserProfile {
@@ -17,6 +20,20 @@ public class UserProfile {
     private String email;
     private String phone;
     private String designation;
+
+    @OneToMany(cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JoinColumn(name = "job_id")
+    private List<Job> jobs = new ArrayList<>();
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
     public int getId() {
         return id;
     }
