@@ -90,6 +90,7 @@ public class HomeController {
     @PostMapping("/edit")
     public String postEdit(Model model, Principal principal) {
         String userId = principal.getName();
+
         return "redirect:/view/" + userId;
     }
 
