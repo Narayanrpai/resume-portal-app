@@ -11,6 +11,7 @@ import pai.dev.app.resume_portal.models.UserProfile;
 import pai.dev.app.resume_portal.repository.UserProfileRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,13 +22,10 @@ public class HomeController {
     private UserProfileRepository userProfileRepository;
     @GetMapping
     public String home() {
-        UserProfile profile1 = new UserProfile();
-        profile1.setId(1);
-        profile1.setUserName("einstein");
-        profile1.setDesignation("Theoretical Physicist");
-        profile1.setFirstName("Albert");
-        profile1.setLastName("Einstein");
-        profile1.setTheme(1);
+        Optional<UserProfile> profileOptional = userProfileRepository.findByUserName("einstein");
+        profileOptional.orElseThrow(()-> new RuntimeException("Not found "));
+
+        UserProfile profile1 = profileOptional.get();
         Job job1 = new Job();
         job1.setId(1);
         job1.setCompany("Company 1");
@@ -40,7 +38,9 @@ public class HomeController {
         job2.setDesignation("Designation");
         job2.setStartDate(LocalDate.of(2022, 4, 3));
         job2.setEndDate(LocalDate.of(2023, 6, 11));
-        profile1.setJobs(List.of(job1, job2));
+        profile1.getJobs().clear();
+        profile1.getJobs().add(job1);
+        profile1.getJobs().add(job2);
         userProfileRepository.save(profile1);
         return "profile";
     }
