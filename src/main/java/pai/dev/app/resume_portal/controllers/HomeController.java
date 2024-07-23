@@ -3,10 +3,7 @@ package pai.dev.app.resume_portal.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.expression.Arrays;
 import pai.dev.app.resume_portal.models.Education;
 import pai.dev.app.resume_portal.models.Job;
@@ -78,12 +75,19 @@ public class HomeController {
         return "profile";
     }
     @GetMapping("/edit")
-    public String edit(Model model, Principal principal) {
+    public String edit(Model model, Principal principal, @RequestParam(required = false) String add) {
         String userName = principal.getName();
         model.addAttribute("userId", userName);
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
         userProfileOptional.orElseThrow(()-> new RuntimeException("Not found: " + userName));
         UserProfile userProfile = userProfileOptional.get();
+        if("job".equals(add)) {
+            userProfile.getJobs().add(new Job());
+        } else if("education".equals(add)) {
+            userProfile.getEducations().add(new Education());
+        } else if("skill".equals(add)) {
+            userProfile.getSkills().add("");
+        }
         model.addAttribute("userProfile", userProfile);
         return "profile-edit";
     }
