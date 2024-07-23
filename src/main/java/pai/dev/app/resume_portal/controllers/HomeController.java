@@ -21,58 +21,9 @@ public class HomeController {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
-    @GetMapping
+    @GetMapping("/")
     public String home() {
-        Optional<UserProfile> profileOptional = userProfileRepository.findByUserName("einstein");
-        profileOptional.orElseThrow(()-> new RuntimeException("Not found "));
-
-        UserProfile profile1 = profileOptional.get();
-        Job job1 = new Job();
-        job1.setId(1);
-        job1.setCompany("Company 1");
-        job1.setDesignation("Designation");
-        job1.setStartDate(LocalDate.of(2024, 1, 1));
-        job1.setEndDate(LocalDate.of(2025, 3, 5));
-        job1.setCurrentJob(true);
-        job1.getResponsibilities().add("Theory of relativity research");
-        job1.getResponsibilities().add("Advanced quantum mechanics research");
-        job1.getResponsibilities().add("Blow people's mind!!!");
-
-        Job job2 = new Job();
-        job2.setId(2);
-        job2.setCompany("Company 2");
-        job2.setDesignation("Designation");
-        job2.setStartDate(LocalDate.of(2022, 4, 3));
-        job2.setEndDate(LocalDate.of(2023, 6, 11));
-        job2.getResponsibilities().add("Theory of relativity research");
-        job2.getResponsibilities().add("Advanced quantum mechanics research");
-        job2.getResponsibilities().add("Blow people's mind!!!");
-        profile1.getJobs().clear();
-        profile1.getJobs().add(job1);
-        profile1.getJobs().add(job2);
-
-        Education e1 = new Education();
-        e1.setStartDate(LocalDate.of(2015, 2, 19));
-        e1.setEndDate(LocalDate.of(2019, 9, 17));
-        e1.setCollege("Awesome College");
-        e1.setQualification("Useless Degree");
-        e1.setSummary("Studied Alot!");
-        Education e2 = new Education();
-        e2.setStartDate(LocalDate.of(2015, 2, 19));
-        e2.setEndDate(LocalDate.of(2019, 9, 17));
-        e2.setCollege("Awesome College");
-        e2.setQualification("Useless Degree");
-        e2.setSummary("Studied Alot!");
-        profile1.getEducations().clear();
-        profile1.getEducations().add(e1);
-        profile1.getEducations().add(e2);
-        profile1.getSkills().clear();
-        profile1.getSkills().add("Quantum physics");
-        profile1.getSkills().add("Modern Physics");
-        profile1.getSkills().add("Violin");
-        profile1.getSkills().add("Philosophy");
-        userProfileRepository.save(profile1);
-        return "profile";
+        return "index";
     }
     @GetMapping("/edit")
     public String edit(Model model, Principal principal, @RequestParam(required = false) String add) {
